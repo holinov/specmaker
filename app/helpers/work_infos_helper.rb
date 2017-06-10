@@ -1,0 +1,2 @@
+module WorkInfosHelper
+end

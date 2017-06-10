@@ -1,0 +1,25 @@
+<%= form_for(entry_info) do |f| %>
+  <% if entry_info.errors.any? %>
+    <div id="error_explanation">
+      <h2><%= pluralize(entry_info.errors.count, "error") %> prohibited this entry_info from being saved:</h2>
+
+      <ul>
+      <% entry_info.errors.full_messages.each do |message| %>
+        <li><%= message %></li>
+      <% end %>
+      </ul>
+    </div>
+  <% end %>
+
+  <div class="field">
+    <%= f.label :name %>
+    <%= f.text_field :name %>
+  </div>
+  <div class="field">
+    <%= render 'shared/group_selector', group: entry_info.group, f: f %>
+  </div>
+
+  <div class="actions">
+    <%= f.submit %>
+  </div>
+<% end %>

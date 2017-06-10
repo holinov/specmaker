@@ -1,0 +1,19 @@
+<p id="notice"><%= notice %></p>
+
+<p>
+  <strong>Name:</strong>
+  <%= @field_info.name %>
+</p>
+
+<p>
+  <strong>Sort order:</strong>
+  <%= @field_info.sort_order %>
+</p>
+
+<p>
+  <strong>Unit name:</strong>
+  <%= @field_info.unit_name %>
+</p>
+
+<%= link_to 'Edit', edit_field_info_path(@field_info) %> |
+<%= link_to 'Back', field_infos_path %>

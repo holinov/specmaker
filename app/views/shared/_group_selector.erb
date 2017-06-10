@@ -1,0 +1,5 @@
+<div class="group_selector field ui-widget">
+  <%= f.label :group_id %>
+  <input type="text" class="selector" value="<%= group&.name %>" />
+  <%= f.hidden_field :group_id , class:'selected' %>
+</div>

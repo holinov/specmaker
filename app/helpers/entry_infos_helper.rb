@@ -1,0 +1,2 @@
+module EntryInfosHelper
+end
