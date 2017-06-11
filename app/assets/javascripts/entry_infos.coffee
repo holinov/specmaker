@@ -6,13 +6,20 @@ $(document).ready ->
   group = $(".group_selector")
   selector = group.find('input.selector')
   selected = group.find('input.selected')
+
+  group.find('.selector_button').click ->
+    #alert(1223)
+    $(selector).autocomplete("search");
+    return false;
+
+
   group.find('input.selector').autocomplete
     source: (request, response) ->
       $.ajax({
         url: "/ajax/group_labels.json",
         dataType: "json"
         success: (data) ->
-          console.log(data);
+          #console.log(data);
           response(data);
 
         error: (error) ->
@@ -26,5 +33,5 @@ $(document).ready ->
       return false;
 
   selector.focus (event, ui) ->
-    $(group.find('input.selector')).autocomplete("search")
-
+    $(group.find('input.selector')).autocomplete("search");
+    return false;

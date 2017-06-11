@@ -1,0 +1,24 @@
+= form_for Group.new do |f|
+  div  layout="column"
+
+    md-input-container.form-group
+      = f.label :name
+      = f.text_field :name, class: 'form-control'
+
+    md-input-container.form-group layout="row"
+      = f.label :group
+
+      md-autocomplete{ md-no-cache="true" md-selected-item="ctrl.s_group" md-items="sgroup in ctrl.selectable"
+      md-search-text="searchText" md-item-text="sgroup.label" md-selected-item-change="ctrl.selectedItemChange(sgroup)"
+      md-item-value="sgroup.value" flex="grow" md-clear-button="true"}
+        md-item-template
+          span ng-bind="sgroup.label"
+        md-not-found
+          span Not found
+
+    = f.hidden_field :group_id, class: 'form-control'
+
+    md-input-container
+      = f.submit 'Save', class: 'btn btn-primary'
+      | &nbsp;
+      a.btn.btn-danger ng-click="ctrl.destroy(ctrl.group)" ng-if="ctrl.group.id" Destroy

@@ -9,11 +9,21 @@ gem 'uglifier', '>= 1.3.0'
 gem 'coffee-rails', '~> 4.2'
 
 gem 'jquery-rails'
-gem 'jquery-ui-rails'
-gem 'jquery-turbolinks'
+#gem 'jquery-ui-rails'
+#gem 'jquery-turbolinks'
 
 gem 'turbolinks', '~> 5'
 gem 'jbuilder', '~> 2.5'
+
+gem 'slim'
+gem 'slim-rails'
+gem 'thin'
+gem 'responders'
+gem 'oxymoron'
+gem 'rails-angular-material'
+
+gem 'bootstrap-sass', '~> 3.3.6'
+
 # Use Redis adapter to run Action Cable in production
 # gem 'redis', '~> 3.0'
 # Use ActiveModel has_secure_password

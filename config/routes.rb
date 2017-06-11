@@ -1,14 +1,42 @@
 Rails.application.routes.draw do
-  get 'ajax/group_labels'
 
-  get 'ajax/entry_labels'
+  # # custom json controllers
+  # get 'ajax/group_labels'
+  # get 'ajax/entry_labels'
+  #
+  # # angularJS json resource controlers
+  # resources :entries, :defaults => {format: :json}
+  # resources :entry_infos, :defaults => {format: :json}
+  # resources :field_infos, :defaults => {format: :json}
+  # resources :fields, :defaults => {format: :json}
+  # resources :groups, :defaults => {format: :json}
+  # resources :projects, :defaults => {format: :json}
+  # resources :work_infos, :defaults => {format: :json}
+  #
+  # # default bootstrap path
+  #
+  # root to: 'application#index'
+
 
   resources :entries
+  resources :entry_infos
+  resources :field_infos
+  resources :fields
+  resources :groups do
+    get 'selectable', on: :collection, is_array: true
+  end
   resources :projects
   resources :work_infos
-  resources :entry_infos
-  resources :groups
-  resources :fields
-  resources :field_infos
+
+  root to: 'projects#index'
+
+  #
+  # resources :entries
+  # resources :projects
+  # resources :work_infos
+  # resources :entry_infos
+  # # resources :groups_old
+  # resources :fields
+  # resources :field_infos
   # For details on the DSL available within this file, see http://guides.rubyonrails.org/routing.html
 end

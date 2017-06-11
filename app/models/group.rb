@@ -1,9 +1,13 @@
 class Group < ApplicationRecord
   has_one :group
   has_many :entry_infos
+  attr_accessor :skipUpdate
 
   before_save do
-    self.full_path = rec_render(self)
+    unless skipUpdate
+      self.full_path = rec_render
+      update_childs(self)
+    end
   end
 
   def render
@@ -11,7 +15,7 @@ class Group < ApplicationRecord
   end
 
   def self.selectable
-    Group.all.map { |g| { value: g.id, label: g.render } }.sort_by { :label }
+    Group.all.map {|g| {value: g.id, label: g.render}}.sort_by {:label}
   end
 
   def to_s
@@ -20,15 +24,26 @@ class Group < ApplicationRecord
 
   private
 
-  def rec_render(g)
-    cur = g
-    res = g.name
-    if g.group_id
-      unless cur.group.present?
+  def update_childs(item, new_root = nil)
+    Group.where(group_id: item.id).find_each do |ch|
+      new_path = "#{new_root ? new_root : item.full_path} / #{ch.name}"
+      update_childs(ch, new_path)
+      ch.update!(full_path: new_path, skipUpdate: true)
+      puts "got path: #{ch.full_path}"
+    end
+  end
+
+
+  def rec_render
+    cur = self
+    res = name
+    if group_id
+      while cur.group_id.present?
         cur = Group.find(cur.group_id)
         res = "#{cur.name} / #{res}"
       end
     end
     res
   end
+
 end

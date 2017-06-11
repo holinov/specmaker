@@ -1,0 +1,15 @@
+md-toolbar
+  .md-toolbar-tools
+    h2.md-flex Категории
+    md-button.md-accent ui-sref="new_group_path" Новая
+
+md-content
+  md-input-container layout="row"
+    label Фильтр
+    input ng-model="filter"
+  md-list
+    md-list-item ng-repeat="group in ctrl.groups" ng-click="group_path(group)"
+      p
+        a ui-sref="group_path(group)" ng-bind="group.full_path"
+      md-button ui-sref="edit_group_path(group)" Изменить
+      md-button ng-click="ctrl.destroy(group)" Удалить

@@ -22,3 +22,7 @@
 
 #RubyMine
 .idea
+
+#some temp shit
+._*
+.DS_Store
