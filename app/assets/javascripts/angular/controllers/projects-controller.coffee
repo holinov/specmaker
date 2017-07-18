@@ -4,7 +4,6 @@ app.controller('ProjectsCtrl', ['Project', 'Entry', 'action', (Project, Entry, a
 
 
   ctrl.add_entry = (item,event) ->
-    #console.log(event)
     if item
       if ctrl.entries.$promise
         ctrl.entries.$promise.then((arr) ->

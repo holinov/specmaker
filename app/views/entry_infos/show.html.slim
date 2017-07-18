@@ -1,0 +1,17 @@
+md-toolbar
+  .md-toolbar-tools
+    h2.md-flex flex="grow" Элемент
+    .small Создано:
+    .small ng-bind="entry_info.created_at | date:'dd.MM.yyyy'"
+  .md-toolbar-tools
+    md-button.md-raised ui-sref="edit_entry_info_path(entry_info)" Редактировать
+    md-button.md-accent.md-raised ng-click="destroy(entry_info)" Удалить
+
+h1 ng-bind="entry_info.name"
+p ng-bind="entry_info.group_name"
+md-list
+  md-list-item ng-repeat="field in entry_info.fields"
+    p ng-bind="field.field_name"
+    p ng-bind="field.value"
+    p ng-bind="field.field_units"
+

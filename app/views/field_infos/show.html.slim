@@ -1,0 +1,12 @@
+md-toolbar
+  .md-toolbar-tools
+    h2.md-flex flex="grow" Поле
+    .small Создано:
+    .small ng-bind="field_info.created_at | date:'dd.MM.yyyy'"
+  .md-toolbar-tools
+    md-button.md-raised ui-sref="edit_field_info_path(field_info)" Редактировать
+    md-button.md-accent.md-raised ng-click="destroy(field_info)" Удалить
+
+h1 ng-bind="field_info.name"
+p ng-bind="field_info.unit_name"
+p ng-bind="field_info.sort_order"

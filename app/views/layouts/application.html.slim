@@ -4,5 +4,15 @@ html ng-app="app"
     base href="/"
     = stylesheet_link_tag 'application'
   body
-    ui-view
+    section flex='grow' layout="row"
+      md-sidenav class="md-sidenav-left" md-component-id="left" md-is-locked-open="$mdMedia('gt-xs')" md-whiteframe="4"
+        md-toolbar
+          md-button.md-raised ui-sref="projects_path" Проекты
+          md-button.md-raised ui-sref="field_infos_path" Поля
+          md-button.md-raised ui-sref="entry_infos_path" Элементы
+          md-button.md-raised ui-sref="groups_path" Категории
+          /md-button Page4
+
+      md-content.md-padding flex="grow"
+        ui-view flex="grow"
     = javascript_include_tag 'application'

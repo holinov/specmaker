@@ -1,0 +1,14 @@
+= form_for @entry_info do |f|
+  div  layout="column"
+
+    md-input-container.form-group
+      = f.label :name
+      = f.text_field :name, class: 'form-control'
+
+    md-input-container.form-group
+      = f.label :group_id
+      = f.text_area :group_id, class: 'form-control'
+
+    md-input-container layout="row"
+      md-button.md-primary.md-raised ng-click="save2(ctrl.entry_info)" flex="grow" Сохранить
+      md-button.md-warn.md-raised ng-click="destroy(ctrl.entry_info)" ng-if="ctrl.entry_info.id" Удалить

@@ -1,0 +1,23 @@
+md-toolbar
+  .md-toolbar-tools
+    h2.md-flex flex="grow" Поля
+    md-button.md-accent.md-raised  ui-sref="new_field_info_path" Новое
+
+md-content
+  md-input-container layout="row"
+    label Фильтр
+    input ng-model="filter"
+  md-list
+    md-list-item
+      p Название
+      p Единицы измерения
+      p Порядок сортировки
+      p &nbsp;
+      p &nbsp;
+    md-list-item ng-repeat="field_info in field_infos" ui-sref="field_info_path(field_info)"
+      p
+        a ui-sref="field_info_path(field_info)" ng-bind="field_info.name"
+      p ng-bind="field_info.unit_name"
+      p ng-bind="field_info.sort_order"
+      md-button ui-sref="edit_field_info_path(field_info)" Изменить
+      md-button ng-click="destroy(field_info)" Удалить

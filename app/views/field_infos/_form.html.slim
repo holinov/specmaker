@@ -1,0 +1,18 @@
+= form_for @field_info do |f|
+  div  layout="column"
+
+    md-input-container.form-group
+      = f.label :name
+      = f.text_field :name, class: 'form-control'
+
+    md-input-container.form-group
+      = f.label :unit_name
+      = f.text_area :unit_name, class: 'form-control'
+
+    md-input-container.form-group
+      = f.label :sort_order
+      = f.text_area :sort_order, class: 'form-control'
+
+    md-input-container  layout="row"
+      md-button.md-primary.md-raised ng-click="save2(ctrl.field_info)" flex="grow" Сохранить
+      md-button.md-warn.md-raised ng-click="destroy(field_info)" ng-if="field_info.id" Удалить
