@@ -1,0 +1,5 @@
+= form_for Entry.new do |f|
+  div layout="row"
+    div ng-bind="entry.desc" flex=""
+    div ng-bind="entry.amount" flex=""
+    md-button ng-click="ctrl.remove(entry.id)" Удалить

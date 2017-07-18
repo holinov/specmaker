@@ -1,0 +1,15 @@
+md-toolbar
+  .md-toolbar-tools
+    h2.md-flex flex="grow" Проекты
+    md-button.md-accent.md-raised  ui-sref="new_project_path" Новый
+
+md-content
+  md-input-container layout="row"
+    label Фильтр
+    input ng-model="filter"
+  md-list
+    md-list-item ng-repeat="project in ctrl.projects" ng-click="project_path(project)"
+      p
+        a ui-sref="project_path(project)" ng-bind="project.name"
+      md-button ui-sref="edit_project_path(project)" Изменить
+      md-button ng-click="ctrl.destroy(project)" Удалить

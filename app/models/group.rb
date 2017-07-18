@@ -1,7 +1,14 @@
 class Group < ApplicationRecord
-  has_one :group
   has_many :entry_infos
   attr_accessor :skipUpdate
+
+  def group
+    Group.find(group_id)
+  end
+
+  def groups
+    Group.where(group_id: item.id)
+  end
 
   before_save do
     unless skipUpdate
@@ -15,7 +22,7 @@ class Group < ApplicationRecord
   end
 
   def self.selectable
-    Group.all.map {|g| {value: g.id, label: g.render}}.sort_by {:label}
+    Group.all.map { |g| { value: g.id, label: g.render } }.sort_by { :label }
   end
 
   def to_s
@@ -29,7 +36,6 @@ class Group < ApplicationRecord
       new_path = "#{new_root ? new_root : item.full_path} / #{ch.name}"
       update_childs(ch, new_path)
       ch.update!(full_path: new_path, skipUpdate: true)
-      puts "got path: #{ch.full_path}"
     end
   end
 

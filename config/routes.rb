@@ -25,7 +25,11 @@ Rails.application.routes.draw do
   resources :groups do
     get 'selectable', on: :collection, is_array: true
   end
-  resources :projects
+  resources :projects do
+    get 'entries', on: :collection, is_array: true
+    get 'selectable_entries', on: :collection, is_array: true
+    post 'update_items', on: :collection
+  end
   resources :work_infos
 
   root to: 'projects#index'
