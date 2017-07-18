@@ -8,7 +8,7 @@ md-content
     label Фильтр
     input ng-model="filter"
   md-list
-    md-list-item ng-repeat="project in ctrl.projects" ng-click="project_path(project)"
+    md-list-item ng-repeat="project in ctrl.projects" ui-sref="project_path(project)"
       p
         a ui-sref="project_path(project)" ng-bind="project.name"
       md-button ui-sref="edit_project_path(project)" Изменить
