@@ -19,7 +19,10 @@ Rails.application.routes.draw do
 
 
   resources :entries
-  resources :entry_infos
+  resources :entry_infos do
+    get 'selectable_entries', on: :collection, is_array: true
+    post 'update_items', on: :collection
+  end
   resources :field_infos
   resources :fields
   resources :groups do

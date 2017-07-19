@@ -5,20 +5,16 @@
       = f.label :name
       = f.text_field :name, class: 'form-control'
 
-    md-input-container.form-group layout="row"
-      = f.label :group
-
+    .form-group layout="row"
       md-autocomplete{ md-no-cache="true" md-selected-item="ctrl.s_group" md-items="sgroup in ctrl.selectable"
       md-search-text="searchText" md-item-text="sgroup.label" md-selected-item-change="ctrl.selectedItemChange(sgroup)"
-      md-item-value="sgroup.value" flex="grow" md-clear-button="true"}
+      md-item-value="sgroup.value" flex="grow" md-clear-button="true" md-floating-label="Group"}
         md-item-template
           span ng-bind="sgroup.label"
         md-not-found
           span Not found
+      = f.hidden_field :group_id, class: 'form-control'
 
-    = f.hidden_field :group_id, class: 'form-control'
-
-    md-input-container
-      = f.submit 'Save', class: 'btn btn-primary'
-      | &nbsp;
-      a.btn.btn-danger ng-click="ctrl.destroy(ctrl.group)" ng-if="ctrl.group.id" Destroy
+    md-input-container layout="row"
+      md-button.md-primary.md-raised ng-click="ctrl.save(ctrl.group)" flex="grow" Сохранить
+      md-button.md-warn.md-raised ng-click="destroy(ctrl.group)" ng-if="ctrl.group.id" Удалить

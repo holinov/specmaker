@@ -1,7 +1,7 @@
 md-toolbar
   .md-toolbar-tools
     h2.md-flex flex="grow" Элементы
-    md-button.md-accent.md-raised  ui-sref="new_entry_info_path" Новое
+    md-button.md-accent.md-raised  ui-sref="new_entry_info_path" Новый
 
 md-content
   md-input-container layout="row"
@@ -11,9 +11,12 @@ md-content
     md-list-item
       p Название
       p Группа
-    md-list-item ng-repeat="entry_info in entry_infos" ui-sref="entry_info_path(entry_info)"
+      p
+    md-list-item ng-repeat="entry_info in entry_infos"
+      /ui-sref="entry_info_path(entry_info)"
       p
         a ui-sref="entry_info_path(entry_info)" ng-bind="entry_info.name"
       p ng-bind="entry_info.group_name"
-      md-button ui-sref="edit_entry_info_path(entry_info)" Изменить
+      p ng-bind="entry_info.feilds_text"
+      md-button.md-raised ui-sref="edit_entry_info_path(entry_info)" Изменить
       md-button ng-click="destroy(entry_info)" Удалить

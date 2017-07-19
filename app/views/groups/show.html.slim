@@ -1,9 +1,11 @@
-.small ng-bind="ctrl.group.created_at | date:'dd.MM.yyyy'"
-
-a.btn.btn-primary ui-sref="edit_group_path(ctrl.group)" Edit
-|&nbsp;
-a.btn.btn-danger ng-click="ctrl.destroy(ctrl.group)" Destroy
+md-toolbar
+  .md-toolbar-tools
+    h2.md-flex flex="grow" Поле
+    .small Создана:
+    .small ng-bind="ctrl.group.created_at | date:'dd.MM.yyyy'"
+  .md-toolbar-tools
+    md-button.md-raised ui-sref="edit_group_path(ctrl.group)" Редактировать
+    md-button.md-accent.md-raised ng-click="destroy(ctrl.group)" Удалить
 
 h1 ng-bind="ctrl.group.name"
-
-h2 ng-bind="ctrl.group.full_path"
+p ng-bind="ctrl.group.full_path"

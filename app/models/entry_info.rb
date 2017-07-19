@@ -5,8 +5,12 @@ class EntryInfo < ApplicationRecord
 
   def render
     # TODO: сделать нормальный запрос с джойном
-    "#{group.render} / #{name} " + fields.sort_by { |f| f.field_info.sort_order }
-                        .map(&:render)
-                        .join(' ')
+    "#{group&.render} / #{name} " + render_fields
+  end
+
+  def render_fields
+    fields.sort_by { |f| f.field_info.sort_order }
+      .map(&:render)
+      .join(' ')
   end
 end

@@ -5,9 +5,41 @@
       = f.label :name
       = f.text_field :name, class: 'form-control'
 
-    md-input-container.form-group
-      = f.label :group_id
-      = f.text_area :group_id, class: 'form-control'
+    .form-group layout="row"
+      md-autocomplete{ md-no-cache="true" md-selected-item="ctrl.s_group" md-items="sgroup in ctrl.selectable"
+      md-search-text="searchText" md-item-text="sgroup.label" md-selected-item-change="ctrl.group_change(sgroup)"
+      md-item-value="sgroup.value" flex="grow" md-clear-button="true" md-floating-label="Group" }
+        md-item-template
+          span ng-bind="sgroup.label"
+        md-not-found
+          span Not found
+
+      = f.hidden_field :group_id, class: 'form-control'
+
+    .form-group
+      = f.label :fields, class: 'group_caption'
+      md-list
+        md-list-item ng-repeat="field in ctrl.entry_info.fields"
+          md-button ng-click="ctrl.remove_entry(field)" Удалить
+
+          md-input-container flex="grow"
+            label ng-bind="field.field_name"
+            input.md-input ng-model="field.value" title="field.field_name"
+            div ng-bind="field.field_units" flex="grow"
+
+    md-input-container layout="row"
+      md-button ng-click="ctrl.add_entry(ctrl.selected_item)" Добавить
+      md-autocomplete{ md-no-cache="true" md-items="selectable_entry in ctrl.selectable_items(ctrl.searchText)" md-selected-item="ctrl.selected_item"
+      md-search-text="ctrl.searchText" md-item-text="selectable_entry.name" md-selected-item-change="ctrl.add_entry(ctrl.selected_item)"
+      flex="grow" md-clear-button="true" md-min-length="0"}
+        md-item-template
+          div layout="row"
+            span ng-bind="selectable_entry.name"
+            |&nbsp;(
+            span ng-bind="selectable_entry.unit_name"
+            |)
+        md-not-found
+          span Not found
 
     md-input-container layout="row"
       md-button.md-primary.md-raised ng-click="save2(ctrl.entry_info)" flex="grow" Сохранить

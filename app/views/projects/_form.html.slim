@@ -22,7 +22,7 @@
       md-button ng-click="ctrl.add_entry(ctrl.selected_item)" Добавить
       md-autocomplete{ md-no-cache="true" md-items="selectable_entry in ctrl.selectable_items(ctrl.searchText)" md-selected-item="ctrl.selected_item"
       md-search-text="ctrl.searchText" md-item-text="selectable_entry.desc" md-selected-item-change="ctrl.add_entry(ctrl.selected_item)"
-      flex="grow" md-clear-button="true"}
+      flex="grow" md-clear-button="true" md-min-length="0"}
         md-item-template
           span ng-bind="selectable_entry.desc"
         md-not-found

@@ -14,10 +14,11 @@ md-content
       p Порядок сортировки
       p &nbsp;
       p &nbsp;
-    md-list-item ng-repeat="field_info in field_infos" ui-sref="field_info_path(field_info)"
+    md-list-item ng-repeat="field_info in field_infos"
       p
         a ui-sref="field_info_path(field_info)" ng-bind="field_info.name"
       p ng-bind="field_info.unit_name"
       p ng-bind="field_info.sort_order"
-      md-button ui-sref="edit_field_info_path(field_info)" Изменить
+      md-button
+        a ui-sref="edit_field_info_path(field_info)" Изменить
       md-button ng-click="destroy(field_info)" Удалить

@@ -30,7 +30,6 @@ app.controller('ProjectsCtrl', ['Project', 'Entry', 'action', (Project, Entry, a
     )
 
   ctrl.save2 = (data, e1) ->
-    console.log(ctrl.project)
     if(ctrl.project.id == null)
       Project.create({project: ctrl.project})
     else

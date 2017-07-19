@@ -28,3 +28,15 @@
     width: 1px;
     white-space: nowrap
 }
+
+.group_caption {
+    transform: translate3d(0, 6px, 0) scale(0.75);
+    order: 1;
+    pointer-events: none;
+    -webkit-font-smoothing: antialiased;
+    padding-left: 3px;
+    padding-right: 0;
+    z-index: 1;
+    color: rgba(0,0,0,0.54);
+    position: absolute;
+}
