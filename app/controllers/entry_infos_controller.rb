@@ -62,8 +62,8 @@ class EntryInfosController < ApplicationController
     ids += params[:selected].map(&:to_i) if params[:selected].present?
     ids.uniq!
     query = (ids.empty? ? FieldInfo.all : FieldInfo.where('id NOT IN (?)', ids))
-            .order('sort_order ASC')
-            .map { |e| { id: e.id, name: e.name, unit_name: e.unit_name } }
+              .order('sort_order ASC')
+              .map { |e| { id: e.id, name: e.name, unit_name: e.unit_name } }
     search_text = search_text.to_s.strip
     query.select! { |i| i[:desc].include? search_text } if search_text.present?
     respond_with(query)
@@ -72,21 +72,23 @@ class EntryInfosController < ApplicationController
   def update_items
     find_entry_info
     pp params
-    fields = params[:fields].map{|f| {field_info_id: f[:field_info_id], value: f[:value] } }
-    work_infos = params[:work_infos]
+    fields = params[:fields].map { |f| { field_info_id: f[:field_info_id], value: f[:value] } }
+    work_infos =
+      params[:work_infos]
+        .map { |w| { name: w[:name], amount: w[:amount], units: w[:units], price: w[:price] } }
 
     puts 'Update items'
-    pp work_infos
+    pp params[:fields], work_infos
     update_collection(@entry_info.fields, :field_info_id, fields) do |item|
       insert = item.merge(entry_info: @entry_info,
                           field_info: FieldInfo.find(item[:field_info_id]))
       Field.create!(insert)
     end
 
-    # update_collection(@entry_info.work_infos, :id, work_infos) do |item|
-    #   insert = item.merge(entry_info: @entry_info)
-    #   WorkInfo.create!(insert)
-    # end
+    update_collection(@entry_info.work_infos, :id, work_infos) do |item|
+      insert = item.merge(entry_info: @entry_info)
+      WorkInfo.create!(insert)
+    end
   end
 
   def update_collection(collection, collection_id, items)
