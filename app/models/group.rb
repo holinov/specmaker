@@ -13,7 +13,7 @@ class Group < ApplicationRecord
   before_save do
     unless skipUpdate
       self.full_path = rec_render
-      update_childs(self)
+      Group.update_childs(self)
     end
   end
 
@@ -29,16 +29,17 @@ class Group < ApplicationRecord
     full_path
   end
 
-  private
-
-  def update_childs(item, new_root = nil)
-    Group.where(group_id: item.id).find_each do |ch|
-      new_path = "#{new_root ? new_root : item.full_path} / #{ch.name}"
-      update_childs(ch, new_path)
-      ch.update!(full_path: new_path, skipUpdate: true)
+  def self.update_childs(item, new_root = nil)
+    if item.id != nil
+      Group.where(group_id: item.id).find_each do |ch|
+        new_path = "#{new_root ? new_root : item.full_path} / #{ch.name}"
+        update_childs(ch, new_path)
+        ch.update!(full_path: new_path, skipUpdate: true)
+      end
     end
   end
 
+  private
 
   def rec_render
     cur = self
@@ -51,5 +52,4 @@ class Group < ApplicationRecord
     end
     res
   end
-
 end

@@ -56,7 +56,7 @@ class EntryInfosController < ApplicationController
     ids = []
     if params[:id]
       find_entry_info
-      ids = @entry_info.field_infos.map(&:id)
+      ids = @entry_info.field_info_ids
     end
     search_text = params[:query]
     ids += params[:selected].map(&:to_i) if params[:selected].present?
@@ -66,29 +66,42 @@ class EntryInfosController < ApplicationController
             .map { |e| { id: e.id, name: e.name, unit_name: e.unit_name } }
     search_text = search_text.to_s.strip
     query.select! { |i| i[:desc].include? search_text } if search_text.present?
-
-    puts "#{ids}, #{search_text}"
-    p query
     respond_with(query)
   end
 
   def update_items
-    entry_fields = @entry_info.field_infos.map(&:field_info_id)
-    items = params[:items]
+    find_entry_info
+    pp params
+    fields = params[:fields].map{|f| {field_info_id: f[:field_info_id], value: f[:value] } }
+    work_infos = params[:work_infos]
+
+    puts 'Update items'
+    pp work_infos
+    update_collection(@entry_info.fields, :field_info_id, fields) do |item|
+      insert = item.merge(entry_info: @entry_info,
+                          field_info: FieldInfo.find(item[:field_info_id]))
+      Field.create!(insert)
+    end
+
+    # update_collection(@entry_info.work_infos, :id, work_infos) do |item|
+    #   insert = item.merge(entry_info: @entry_info)
+    #   WorkInfo.create!(insert)
+    # end
+  end
+
+  def update_collection(collection, collection_id, items)
+    collection_items = collection.map(&collection_id)
     items.each do |item|
-      if entry_fields.include? item['id']
-        entry = @project.entries.where('entry_info_id = ?', item['id']).first
-        entry.amount = item['amount']
-        entry.save!
+      if collection_items.include? item[collection_id.to_s]
+        collection_item = collection.where(collection_id => item[collection_id.to_s]).first
+        collection_item.update!(item)
       else
-        Field.create!(entry_info: @entry_info,
-                      field_info: FieldInfo.find(item['id']),
-                      amount: item['value'])
+        yield item
       end
     end
-    new_items = items.map { |item| item['id'] }
-    @entry_info.entries.each do |field|
-      field.destroy! unless new_items.include? field.field_info_id
+    new_items = items.map { |item| item[collection_id.to_s] }
+    collection.each do |item|
+      item.destroy! unless new_items.include? item.send(collection_id)
     end
   end
 
@@ -98,7 +111,14 @@ class EntryInfosController < ApplicationController
     @entry_info = EntryInfo.find(params[:id])
   end
 
+  def field_params
+    params
+      .permit(:id, :value, :field_units)
+  end
+
   def group_params
-    params.require(:entry_info).permit(:id, :name, :unit_name, :sort_order, :group_id)
+    params
+      .require(:entry_info)
+      .permit(:id, :name, :unit_name, :sort_order, :group_id)
   end
 end

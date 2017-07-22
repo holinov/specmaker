@@ -15,4 +15,5 @@ class EntryInfoSerializer < ActiveModel::Serializer
   end
 
   has_many :fields
+  has_many :work_infos
 end

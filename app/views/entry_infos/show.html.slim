@@ -9,9 +9,21 @@ md-toolbar
 
 h1 ng-bind="entry_info.name"
 p ng-bind="entry_info.group_name"
-md-list
-  md-list-item ng-repeat="field in entry_info.fields"
-    p ng-bind="field.field_name"
-    p ng-bind="field.value"
-    p ng-bind="field.field_units"
+
+md-tabs md-dynamic-height='' md-border-bottom=''
+  md-tab label="Поля"
+    md-list
+      md-list-item ng-repeat="field in entry_info.fields"
+        p ng-bind="field.field_name"
+        p ng-bind="field.value"
+        p ng-bind="field.field_units"
+  md-tab label="Работы"
+    md-list
+      md-list-item ng-repeat="work_info in entry_info.work_infos"
+        p ng-bind="work_info.name"
+        p ng-bind="work_info.amount"
+        p ng-bind="work_info.units"
+        p
+          span ng-bind="work_info.price"
+          | руб.
 

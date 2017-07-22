@@ -16,30 +16,54 @@
 
       = f.hidden_field :group_id, class: 'form-control'
 
-    .form-group
-      = f.label :fields, class: 'group_caption'
-      md-list
-        md-list-item ng-repeat="field in ctrl.entry_info.fields"
-          md-button ng-click="ctrl.remove_entry(field)" Удалить
+    md-tabs md-dynamic-height='' md-border-bottom=''
+      md-tab label="Поля"
+        .form-group
+          md-list
+            md-list-item ng-repeat="field in ctrl.entry_info.fields"
+              md-button ng-click="ctrl.remove_entry(field)" Удалить
+              md-input-container flex="grow"
+                label ng-bind="field.field_name"
+                input.md-input ng-model="field.value" title="field.field_name"
+                div ng-bind="field.field_units" flex="grow"
 
-          md-input-container flex="grow"
-            label ng-bind="field.field_name"
-            input.md-input ng-model="field.value" title="field.field_name"
-            div ng-bind="field.field_units" flex="grow"
+        md-input-container layout="row"
+          md-button ng-click="ctrl.add_field(ctrl.selected_item)" Добавить
+          md-autocomplete{ md-no-cache="true" md-items="selectable_entry in ctrl.selectable_items(ctrl.searchText)" md-selected-item="ctrl.selected_item"
+          md-search-text="ctrl.searchText" md-item-text="selectable_entry.name" md-selected-item-change="ctrl.add_entry(ctrl.selected_item)"
+          flex="grow" md-clear-button="true" md-min-length="0"}
+            md-item-template
+              div layout="row"
+                span ng-bind="selectable_entry.name"
+                |&nbsp;(
+                span ng-bind="selectable_entry.unit_name"
+                |)
+            md-not-found
+              span Not found
 
-    md-input-container layout="row"
-      md-button ng-click="ctrl.add_entry(ctrl.selected_item)" Добавить
-      md-autocomplete{ md-no-cache="true" md-items="selectable_entry in ctrl.selectable_items(ctrl.searchText)" md-selected-item="ctrl.selected_item"
-      md-search-text="ctrl.searchText" md-item-text="selectable_entry.name" md-selected-item-change="ctrl.add_entry(ctrl.selected_item)"
-      flex="grow" md-clear-button="true" md-min-length="0"}
-        md-item-template
-          div layout="row"
-            span ng-bind="selectable_entry.name"
-            |&nbsp;(
-            span ng-bind="selectable_entry.unit_name"
-            |)
-        md-not-found
-          span Not found
+      md-tab label="Работы"
+        .form-group
+          md-list
+            md-list-item ng-repeat="work_info in ctrl.entry_info.work_infos"
+              md-button ng-click="ctrl.remove_work_info(field)" Удалить
+              div flex="grow"
+                div layout="column"
+                  md-input-container layout="row"
+                    label Вид работ
+                    input.md-input ng-model="work_info.name" title="Вид работ"
+                  div layout="row"
+                    md-input-container layout="row"
+                      label Количество
+                      input.md-input ng-model="work_info.amount"
+                    md-input-container layout="row"
+                      label Единицы измерения
+                      input.md-input ng-model="work_info.units"
+                    md-input-container layout="row"
+                      label Цена
+                      input.md-input ng-model="work_info.price"
+
+            md-list-item
+              md-button.md-primary.md-raised ng-click="new_work()" Добавить
 
     md-input-container layout="row"
       md-button.md-primary.md-raised ng-click="save2(ctrl.entry_info)" flex="grow" Сохранить
