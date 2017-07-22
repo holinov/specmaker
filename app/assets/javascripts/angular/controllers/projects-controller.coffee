@@ -42,7 +42,10 @@ app.controller('ProjectsCtrl', ['Project', 'Entry', 'action', (Project, Entry, a
 
   action('show', (params) ->
     ctrl.project = Project.get({id: params.id})
+    console.log(ctrl.project)
     ctrl.entries = Project.entries({id: params.id})
+    console.log(ctrl.entries)
+
   )
 
   action('new', ->

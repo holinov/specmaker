@@ -9,9 +9,27 @@ md-toolbar
 
 h1 ng-bind="ctrl.project.name"
 p ng-bind="ctrl.project.desc"
-h2 Состав проекта
-md-list
-  md-list-item ng-repeat="entry in ctrl.entries"
-    div ng-bind="entry.desc"
+
+md-tabs
+  md-tab label="Состав проекта"
+    md-list
+      md-list-item ng-repeat="entry in ctrl.entries"
+        div ng-bind="entry.amount"
+        div X&nbsp;
+        div ng-bind="entry.desc"
+  md-tab label="Работы"
+    table width="100%"
+      thead
+        tr
+          th Вид работ
+          th Количество работ
+          th &nbsp;
+          th Цена
+      tbody
+        tr ng-repeat="work_info in ctrl.project.work_infos"
+          td ng-bind="work_info.name"
+          td ng-bind="work_info.amount"
+          td ng-bind="work_info.units"
+          td ng-bind="work_info.price"
 
 /h2 ng-bind="ctrl.project.full_path"
