@@ -29,7 +29,7 @@ app.controller('EntryInfosCtrl', ($scope, EntryInfo, Group, FieldInfo, action) -
 
   ctrl.group_change = (item) ->
     if(item)
-      ctrl.entry_info.group_id = item.value
+      ctrl.entry_info.group_id = item.id
     else
       ctrl.entry_info.group_id = null
 
@@ -38,6 +38,13 @@ app.controller('EntryInfosCtrl', ($scope, EntryInfo, Group, FieldInfo, action) -
       e.id
     )
     EntryInfo.selectable_entries({id: ctrl.entry_info.id, query: text, selected: selected_ids}).$promise.then((data) ->
+      return data
+    )
+
+  ctrl.selectable_groups = (text) ->
+    console.log("gr")
+    console.log(text)
+    EntryInfo.selectable_groups(query: text).$promise.then((data) ->
       return data
     )
 
@@ -57,15 +64,16 @@ app.controller('EntryInfosCtrl', ($scope, EntryInfo, Group, FieldInfo, action) -
   );
 
   action('edit', (params) ->
-    ctrl.selectable = Group.selectable();
+    ctrl.selectable = EntryInfo.selectable_groups()
     ctrl.entry_info = EntryInfo.edit({id: params.id})
     ctrl.fields = EntryInfo.selectable_entries(id: ctrl.entry_info.id)
     $scope.entry_info = ctrl.entry_info
     $scope.save = EntryInfo.update
     ctrl.selectable.$promise.then( (arr) ->
       ctrl.entry_info.$promise.then( (entry) ->
+        console.log(arr)
         ctrl.s_group  = arr.find( (x) ->
-          x.value == entry.group_id
+          x.id == entry.group_id
         )
       )
     )

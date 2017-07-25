@@ -6,11 +6,11 @@
       = f.text_field :name, class: 'form-control'
 
     .form-group layout="row"
-      md-autocomplete{ md-no-cache="true" md-selected-item="ctrl.s_group" md-items="sgroup in ctrl.selectable"
-      md-search-text="searchText" md-item-text="sgroup.label" md-selected-item-change="ctrl.group_change(sgroup)"
-      md-item-value="sgroup.value" flex="grow" md-clear-button="true" md-floating-label="Group" }
+      md-autocomplete{ md-no-cache="true" md-selected-item="ctrl.s_group" md-items="sgroup in ctrl.selectable_groups(ctrl.group_searchText)"
+      md-search-text="ctrl.group_searchText" md-item-text="sgroup.full_path" md-selected-item-change="ctrl.group_change(sgroup)"
+      md-item-value="sgroup.id" flex="grow" md-clear-button="true" md-floating-label="Group" md-min-length="0" }
         md-item-template
-          span ng-bind="sgroup.label"
+          span ng-bind="sgroup.full_path"
         md-not-found
           span Not found
 

@@ -200,6 +200,23 @@ angular.module("oxymoron.config.states", [])
           }
         })
       
+        .state('selectable_groups_entry_infos_path', {
+          url: '/entry_infos/selectable_groups',
+          
+          templateUrl: function(params) {
+            params['ng-view']='';
+            
+            
+            return Routes['selectable_groups_entry_infos_path'](params);
+          },
+          controller: 'EntryInfosCtrl as ctrl',
+          resolve: {
+            action: ['$stateParams', function ($stateParams) {
+              return resolve('selectable_groups', $stateParams)
+            }]
+          }
+        })
+      
         .state('entry_infos_path', {
           url: '/entry_infos',
           
@@ -785,6 +802,11 @@ angular.module("oxymoron.services.resources", [])
           "isArray": true,
           "method": "GET"
         },
+        "selectable_groups": {
+          "url": "/entry_infos/selectable_groups.json",
+          "isArray": true,
+          "method": "GET"
+        },
         "update_items": {
           "url": "/entry_infos/update_items.json",
           "isArray": null,
@@ -1185,7 +1207,7 @@ angular.module("oxymoron.directives", ['oxymoron.directives.fileupload', 'oxymor
 (function () {
   var Routes = function () {
     var self = this,
-        routes = {"rails_info_properties":{"defaults":{},"path":"/rails/info/properties"},"rails_info_routes":{"defaults":{},"path":"/rails/info/routes"},"rails_info":{"defaults":{},"path":"/rails/info"},"rails_mailers":{"defaults":{},"path":"/rails/mailers"},"entries":{"defaults":{},"path":"/entries"},"new_entry":{"defaults":{},"path":"/entries/new"},"edit_entry":{"defaults":{},"path":"/entries/:id/edit"},"entry":{"defaults":{},"path":"/entries/:id"},"selectable_entries_entry_infos":{"defaults":{},"path":"/entry_infos/selectable_entries"},"update_items_entry_infos":{"defaults":{},"path":"/entry_infos/update_items"},"entry_infos":{"defaults":{},"path":"/entry_infos"},"new_entry_info":{"defaults":{},"path":"/entry_infos/new"},"edit_entry_info":{"defaults":{},"path":"/entry_infos/:id/edit"},"entry_info":{"defaults":{},"path":"/entry_infos/:id"},"field_infos":{"defaults":{},"path":"/field_infos"},"new_field_info":{"defaults":{},"path":"/field_infos/new"},"edit_field_info":{"defaults":{},"path":"/field_infos/:id/edit"},"field_info":{"defaults":{},"path":"/field_infos/:id"},"fields":{"defaults":{},"path":"/fields"},"new_field":{"defaults":{},"path":"/fields/new"},"edit_field":{"defaults":{},"path":"/fields/:id/edit"},"field":{"defaults":{},"path":"/fields/:id"},"selectable_groups":{"defaults":{},"path":"/groups/selectable"},"groups":{"defaults":{},"path":"/groups"},"new_group":{"defaults":{},"path":"/groups/new"},"edit_group":{"defaults":{},"path":"/groups/:id/edit"},"group":{"defaults":{},"path":"/groups/:id"},"entries_projects":{"defaults":{},"path":"/projects/entries"},"selectable_entries_projects":{"defaults":{},"path":"/projects/selectable_entries"},"update_items_projects":{"defaults":{},"path":"/projects/update_items"},"projects":{"defaults":{},"path":"/projects"},"new_project":{"defaults":{},"path":"/projects/new"},"edit_project":{"defaults":{},"path":"/projects/:id/edit"},"project":{"defaults":{},"path":"/projects/:id"},"work_infos":{"defaults":{},"path":"/work_infos"},"new_work_info":{"defaults":{},"path":"/work_infos/new"},"edit_work_info":{"defaults":{},"path":"/work_infos/:id/edit"},"work_info":{"defaults":{},"path":"/work_infos/:id"},"root":{"defaults":{},"path":"/"}};
+        routes = {"rails_info_properties":{"defaults":{},"path":"/rails/info/properties"},"rails_info_routes":{"defaults":{},"path":"/rails/info/routes"},"rails_info":{"defaults":{},"path":"/rails/info"},"rails_mailers":{"defaults":{},"path":"/rails/mailers"},"entries":{"defaults":{},"path":"/entries"},"new_entry":{"defaults":{},"path":"/entries/new"},"edit_entry":{"defaults":{},"path":"/entries/:id/edit"},"entry":{"defaults":{},"path":"/entries/:id"},"selectable_entries_entry_infos":{"defaults":{},"path":"/entry_infos/selectable_entries"},"selectable_groups_entry_infos":{"defaults":{},"path":"/entry_infos/selectable_groups"},"update_items_entry_infos":{"defaults":{},"path":"/entry_infos/update_items"},"entry_infos":{"defaults":{},"path":"/entry_infos"},"new_entry_info":{"defaults":{},"path":"/entry_infos/new"},"edit_entry_info":{"defaults":{},"path":"/entry_infos/:id/edit"},"entry_info":{"defaults":{},"path":"/entry_infos/:id"},"field_infos":{"defaults":{},"path":"/field_infos"},"new_field_info":{"defaults":{},"path":"/field_infos/new"},"edit_field_info":{"defaults":{},"path":"/field_infos/:id/edit"},"field_info":{"defaults":{},"path":"/field_infos/:id"},"fields":{"defaults":{},"path":"/fields"},"new_field":{"defaults":{},"path":"/fields/new"},"edit_field":{"defaults":{},"path":"/fields/:id/edit"},"field":{"defaults":{},"path":"/fields/:id"},"selectable_groups":{"defaults":{},"path":"/groups/selectable"},"groups":{"defaults":{},"path":"/groups"},"new_group":{"defaults":{},"path":"/groups/new"},"edit_group":{"defaults":{},"path":"/groups/:id/edit"},"group":{"defaults":{},"path":"/groups/:id"},"entries_projects":{"defaults":{},"path":"/projects/entries"},"selectable_entries_projects":{"defaults":{},"path":"/projects/selectable_entries"},"update_items_projects":{"defaults":{},"path":"/projects/update_items"},"projects":{"defaults":{},"path":"/projects"},"new_project":{"defaults":{},"path":"/projects/new"},"edit_project":{"defaults":{},"path":"/projects/:id/edit"},"project":{"defaults":{},"path":"/projects/:id"},"work_infos":{"defaults":{},"path":"/work_infos"},"new_work_info":{"defaults":{},"path":"/work_infos/new"},"edit_work_info":{"defaults":{},"path":"/work_infos/:id/edit"},"work_info":{"defaults":{},"path":"/work_infos/:id"},"root":{"defaults":{},"path":"/"}};
 
     self.defaultParams = {}
 

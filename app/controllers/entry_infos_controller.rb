@@ -52,6 +52,16 @@ class EntryInfosController < ApplicationController
     end
   end
 
+  def selectable_groups
+    groups =
+      if params[:query]
+        Group.where('full_path LIKE ?', "%#{params[:query]}%")
+      else
+        Group.all
+      end
+    respond_with(groups)
+  end
+
   def selectable_entries
     ids = []
     if params[:id]
@@ -64,8 +74,8 @@ class EntryInfosController < ApplicationController
     query = (ids.empty? ? FieldInfo.all : FieldInfo.where('id NOT IN (?)', ids))
               .order('sort_order ASC')
               .map { |e| { id: e.id, name: e.name, unit_name: e.unit_name } }
-    search_text = search_text.to_s.strip
-    query.select! { |i| i[:desc].include? search_text } if search_text.present?
+    search_text = search_text.to_s.strip.downcase
+    query.select! { |i| i[:name].downcase.include? search_text } if search_text.present?
     respond_with(query)
   end
 
